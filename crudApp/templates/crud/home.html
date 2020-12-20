@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel=stylesheet href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
+    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="alert alert-info text-center">Class Based View ModelForm CRUD Project</h2>
+       <div class="row">
+        <div class="col-sm-5">
+            <h5 class="text-center alert alert-warning">Add new</h5>
+            <form action="" method='POST'>
+                {% csrf_token %}
+                {% for fields in form %}
+                 {{fields.label}} <br>
+                 {{fields}} <br>
+                {% endfor %}
+                <input type="submit" value="Add" class="btn-info btn mt-3">
+            </form>
+        </div>
+        <div class="col-sm-7 text-center">
+            <h5 class="text-center alert alert-warning">Student Information</h5>
+            {% if stu %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                       <th scope="col">ID</th>
+                       <th scope="col">Name</th>
+                       <th scope="col">Email</th>
+                       <th scope="col">Password</th>
+                       <th scope="col">Action</th>
+                    </tr>
+            </thead>
+            <tbody>
+                {% for st in stu %}
+                <tr>
+                    <th scope="row">{{st.id}}</th>
+                    <td>{{st.name}}</td>
+                    <td>{{st.email}}</td>
+                    <td>{{st.password}}</td>
+                    <td>
+                        <form action="{% url 'updatedata' st.id %}" method="GET" class="d-inline">
+                            {% csrf_token %}
+                        <input type="submit" class="btn btn-warning btn-sm" value="Update">
+                        </form>
+                        
+                        <form action="{% url 'deletedata' st.id %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                        <input type="submit" class="btn btn-info btn-sm" value="Delete">
+                        </form> 
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            {% else %}
+            <h3>Empty database</h3>
+            {% endif %}
+        </div>
+       </div>
+    </div>
+<script src=https://code.jquery.com/jquery-3.3.1.slim.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+<script src=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js></script>
+</body>
+</html>
